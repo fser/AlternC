@@ -139,6 +139,16 @@ class m_dom {
         return $obj;
     }
 
+    /**
+     * Hook function called by the statistics class.
+     * As of today, only the total count of domains is exported.
+     */
+    function hook_stats() {
+        global $db;
+        $db->query('SELECT COUNT(*) AS count from domaines');
+        $db->next_record();
+        return array('domains_count' => array('value' => $db->Record['count'], 'hostname' => php_uname('n')));
+    }
 
     /**
      * Retourne un tableau contenant les types de domaines
